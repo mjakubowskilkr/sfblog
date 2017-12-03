@@ -13,6 +13,18 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig', array());
+        $posts = $this->getDoctrine()
+                        ->getManager()
+                        ->createQueryBuilder()
+                        ->from('AppBundle:Post', 'p')
+                        ->select('p')
+                        ->setMaxResults(20)
+                        ->getQuery()
+                        ->getResult();
+        
+                        
+        return $this->render('default/index.html.twig', array(
+            'posts' => $posts
+        ));
     }
 }
