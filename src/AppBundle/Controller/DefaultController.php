@@ -13,18 +13,21 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $posts = $this->getDoctrine()
+        $qb = $this->getDoctrine()
                         ->getManager()
                         ->createQueryBuilder()
                         ->from('AppBundle:Post', 'p')
-                        ->select('p')
-                        ->setMaxResults(20)
-                        ->getQuery()
-                        ->getResult();
-        
+                        ->select('p');
                         
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $qb,
+                $request->query->get('page', 1),
+                20
+            );
+        
         return $this->render('default/index.html.twig', array(
-            'posts' => $posts
+            'posts' => $pagination
         ));
     }
 }
