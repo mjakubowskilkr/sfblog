@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>{{ post.title}}</h1>
+		<div>
+    		<p>{{ post.lead}}</p>
+    		<p>{{ post.content}}</p>
+    		
+    		<span class="">Dodano: {{ post.createdAt| date('H:i d/m/Y') }}</span>
+    		<hr />
+    		
+    		<h3>Komentarze</h3>
+    		
+    		{%  if app.user %}
+        		{{ form_start(form) }}
+        		
+        			{{ form_widget(form) }}
+        			<button class="btn btn-primary">Dodaj komentarz</button>
+        		{{ form_end(form) }}
+			{% else %}
+    			
+    			<p>Komentarze mogą dodawać tylko zalogowani użytkownicy. <a href="{{ path('fos_user_security_login')}}">Zaloguj się</a>
+    			
+    		{% endif %}
+    		
+    		{% for comment in post.comments %}
+    			<div>
+    				<p>{{ comment.content }}</p>
+    				<span class="">Dodano: {{ comment.createdAt| date('H:i d/m/Y') }} {% if comment.user %} przez {{ comment.user }} {% endif %}</span>
+    			</div>
+    			<hr />
+    		{% endfor %}
+		</div>
+		
+{% endblock %}

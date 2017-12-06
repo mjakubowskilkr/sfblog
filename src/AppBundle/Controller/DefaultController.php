@@ -39,28 +39,31 @@ class DefaultController extends Controller
      */
     public function showAction(Post $post, Request $request)
     {
-        $comment = new Comment();
-        $comment->setPost($post);
+        $form = null;
         
-        //$comment->setUser($user);
-        
-        $form = $this->createForm(new CommentType(), $comment);
-        $form->handleRequest($request);
-        
-        if($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
+        if ($user = $this->getUser()) {
+
+            $comment = new Comment();
+            $comment->setPost($post);
+            $comment->setUser($user);
+
+            $form = $this->createForm(new CommentType(), $comment);
+            $form->handleRequest($request);
             
-            $this->addFlash('success', 'Komentarz został pomyślnie dodany');
-            
-            return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            if($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($comment);
+                $em->flush();
+                
+                $this->addFlash('success', 'Komentarz został pomyślnie dodany');
+                
+                return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            }
         }
-        
         
         return $this->render('default/show.html.twig', array(
             'post' => $post,
-            'form' => $form->createView()
+            'form' => is_null($form) ? $form : $form->createView()
         ));
     }
 }
