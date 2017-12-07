@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle;
 
 class AppKernel extends Kernel
 {
@@ -18,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new EasyAdminBundle(),
             new AppBundle\AppBundle(),
         );
 

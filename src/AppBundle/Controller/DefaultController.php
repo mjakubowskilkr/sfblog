@@ -55,7 +55,7 @@ class DefaultController extends Controller
                 $em->persist($comment);
                 $em->flush();
                 
-                $this->addFlash('success', 'Komentarz został pomyślnie dodany');
+                $this->addFlash('success', 'Komentarz został pomyślnie dodany'); // to nie działa
                 
                 return $this->redirectToRoute('post_show', array('id' => $post->getId()));
             }

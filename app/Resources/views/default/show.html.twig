@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	<a href="http://sfblog/app_dev.php"><h1>Symfony Blog based on 2.7.39</h1></a>
+
 	<h1>{{ post.title}}</h1>
 		<div>
     		<p>{{ post.lead}}</p>
     		<p>{{ post.content}}</p>
     		
-    		<span class="">Dodano: {{ post.createdAt| date('H:i d/m/Y') }}</span>
-    		<hr />
+    		<span class="float-right">Dodano: {{ post.createdAt| date('H:i d/m/Y') }}</span>
+    		<br /><br />
+			<hr />
     		
     		<h3>Komentarze</h3>
     		
@@ -15,8 +18,9 @@
         		{{ form_start(form) }}
         		
         			{{ form_widget(form) }}
-        			<button class="btn btn-primary">Dodaj komentarz</button>
+        			<button class="btn btn-primary float-right">Dodaj komentarz</button>
         		{{ form_end(form) }}
+        		<br /><br />
 			{% else %}
     			
     			<p>Komentarze mogą dodawać tylko zalogowani użytkownicy. <a href="{{ path('fos_user_security_login')}}">Zaloguj się</a>
